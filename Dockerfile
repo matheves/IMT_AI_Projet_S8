@@ -6,7 +6,7 @@ ENV DOCKER_FLAG=1
 
 COPY . .
 
-RUN export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin
 
 RUN pip install pipreqs &&\
     pipreqs . &&\

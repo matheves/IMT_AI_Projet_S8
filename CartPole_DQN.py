@@ -6,17 +6,17 @@ import numpy as np
 from collections import deque
 import matplotlib.pyplot as plt
 import time
-# import os
+import os
 from collections import deque
 
 replay_memory = deque(maxlen=2000)
 
-# env = gym.make('CartPole-v1')
-env = gym.make("Walker2d-v2")
+env = gym.make('CartPole-v1')
+#env = gym.make("Walker2d-v2")
 
 
-# isDocker = os.environ.get("DOCKER_FLAG") != "1"
-isDocker = True
+isDocker = os.environ.get("DOCKER_FLAG") == "1"
+#isDocker = True
 
 
 ###Deep q-Learning
@@ -97,7 +97,8 @@ for episode in range(num_iters):
     for step in range(num_steps):
         epsilon = max(1 - episode / 500, 0.01)
         obs, reward, done, info = play_one_step(env, obs, epsilon)
-        if not isDocker : env.render()
+        if not isDocker : 
+            env.render()
         #time.sleep(0.001)
         if done:
             break
@@ -116,7 +117,8 @@ plt.figure(figsize=(8, 4))
 plt.plot(rewards)
 plt.xlabel("Episode", fontsize=14)
 plt.ylabel("Sum of rewards", fontsize=14)
-if not isDocker : plt.show()
+if not isDocker : 
+    plt.show()
 
 
 env.close()
