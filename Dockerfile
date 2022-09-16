@@ -7,7 +7,6 @@ ENV DOCKER_FLAG=1
 COPY . .
 
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin
-
 # Setup MuJoCo
 RUN pip install pipreqs &&\
     pipreqs . &&\
@@ -26,3 +25,5 @@ RUN apt-get install xvfb -y
 RUN pip install jupyter -U && pip install jupyterlab
 
 EXPOSE 8888
+
+CMD xvfb-run -a -s "-screen 0 1400x900x24" jupyter notebook --ip=0.0.0.0 --allow-root
