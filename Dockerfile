@@ -26,7 +26,3 @@ RUN apt-get install xvfb -y
 RUN pip install jupyter -U && pip install jupyterlab
 
 EXPOSE 8888
-
-#CMD ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root"]
-#CMD ["python", "CartPole_DQN.py"]
-#CMD ["sleep", "10000"]
