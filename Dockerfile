@@ -8,6 +8,8 @@ COPY . .
 
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin
 # Setup MuJoCo
+RUN python -m pip install --upgrade pip
+
 RUN pip install pipreqs &&\
     pipreqs . &&\
     pip install pyglet &&\
@@ -21,7 +23,9 @@ RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machi
 
 RUN apt-get update -y
 RUN apt-get install xvfb -y
-RUN pip install --user tf-agents[reverb] -y
+
+RUN pip install --user tf-agents[reverb] --no-cache-dir
+
 # Setup Jupyter
 RUN pip install jupyter -U && pip install jupyterlab
 
