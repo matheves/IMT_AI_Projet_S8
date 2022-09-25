@@ -21,9 +21,10 @@ RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machi
 
 RUN apt-get update -y
 RUN apt-get install xvfb -y
+RUN pip install --user tf-agents[reverb] -y
 # Setup Jupyter
 RUN pip install jupyter -U && pip install jupyterlab
 
 EXPOSE 8888
 
-CMD xvfb-run -a -s "-screen 0 1400x900x24" jupyter notebook --ip=0.0.0.0 --allow-root
+#CMD xvfb-run -a -s "-screen 0 1400x900x24" jupyter notebook --ip=0.0.0.0 --allow-root
