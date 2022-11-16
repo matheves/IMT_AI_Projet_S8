@@ -265,6 +265,8 @@ policy_dir = os.path.join(tempdir, 'policy')
 tf_policy_saver = policy_saver.PolicySaver(tf_agent.policy)
 
 
+def create_zip_file(dirname, base_filename):
+    return shutil.make_archive(base_filename, 'zip', dirname)
 
 # Reset the train step
 tf_agent.train_step_counter.assign(0)
@@ -291,14 +293,14 @@ for _ in range(num_iterations):
         
     if step % save_interval:
         train_checkpointer.save(global_step)
+        checkpoint_zip_filename = create_zip_file(checkpoint_dir, os.path.join(tempdir, 'exported_cp_humanoid'))
 
 rb_observer.close()
 reverb_server.stop()
 
 
-def create_zip_file(dirname, base_filename):
-    return shutil.make_archive(base_filename, 'zip', dirname)
 
 
-checkpoint_zip_filename = create_zip_file(checkpoint_dir, os.path.join(tempdir, 'exported_cp_humanoid'))
+
+
 
