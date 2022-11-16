@@ -7,6 +7,7 @@ import reverb
 import tempfile
 import PIL.Image
 import shutil
+import datetime
 
 import tensorflow as tf
 
@@ -275,6 +276,14 @@ tf_agent.train_step_counter.assign(0)
 avg_return = get_eval_metrics()["AverageReturn"]
 returns = [avg_return]
 
+  
+# using now() to get current time
+
+
+f = open("log.txt", "a")
+f.write(datetime.datetime.now())
+f.close()
+
 for _ in range(num_iterations):
     # Training.
     collect_actor.run()
@@ -287,6 +296,9 @@ for _ in range(num_iterations):
         metrics = get_eval_metrics()
         log_eval_metrics(step, metrics)
         returns.append(metrics["AverageReturn"])
+        f = open("log.txt", "a")
+        f.write(metrics["AverageReturn"])
+        f.close()
         
     if step % log_interval == 0:
         print('step = {0}: loss = {1}'.format(step, loss_info.loss.numpy()))
