@@ -248,7 +248,7 @@ log_eval_metrics(0, metrics)
 
 
 global_step = tf.compat.v1.train.get_or_create_global_step()
-tempdir = os.getenv("TEST_TMPDIR", tempfile.gettempdir())
+
 
 
 checkpoint_dir = os.path.join(tempdir, 'checkpoint')
@@ -293,7 +293,7 @@ for _ in range(num_iterations):
         
     if step % save_interval:
         train_checkpointer.save(global_step)
-        checkpoint_zip_filename = create_zip_file(checkpoint_dir, os.path.join(tempdir, 'exported_cp_humanoid'))
+        checkpoint_zip_filename = create_zip_file(checkpoint_dir, os.path.join('.', 'exported_cp_humanoid'))
 
 rb_observer.close()
 reverb_server.stop()
