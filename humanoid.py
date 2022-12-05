@@ -281,7 +281,7 @@ returns = [avg_return]
 
 
 f = open("log.txt", "a")
-f.write(datetime.datetime.now())
+f.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 f.close()
 
 for _ in range(num_iterations):
