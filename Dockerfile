@@ -1,36 +1,23 @@
-FROM xkianteb/mujoco:latest
-
+FROM tensorflow/tensorflow:latest-gpu
 WORKDIR /app
-
 ENV DOCKER_FLAG=1
-
 COPY . .
 
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin
-# Setup MuJoCo
-RUN python -m pip install --upgrade pip
+RUN apt update &&\
+	apt install vim -y &&\
+	apt install --upgrade pip &&\
+	apt install libosmesa6-dev libgl1-mesa-glx libglfw3 -y &&\
+	apt install patchelf &&\
+	pip install imageio &&\
+	pip install ipython &&\
+	pip install matplotlib &&\
+	pip install --user tf-agents[reverb] &&\
+	pip3 install -U 'mujoco-py<2.2,>=2.1' &&\
+	apt install wget &&\
+	wget https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz &&\
+	tar -xvf mujoco210-linux-x86_64.tar.gz &&\
+	mkdir -p ~/.mujoco &&\
+	mv mujoco210 ~/.mujoco/ &&\
+	echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin' >> ~/.bashrc &&\
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin
 
-RUN pip install pipreqs &&\
-    pipreqs . &&\
-    pip install pyglet &&\
-    pip install mujoco_py &&\
-    mkdir -p /root/.mujoco/mujoco210 &&\
-    cp -r /mujoco/.mujoco/mujoco210/* /root/.mujoco/mujoco210/ 
-
-RUN apt-key del 7fa2af80
-RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub
-RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu2004/x86_64/7fa2af80.pub
-
-RUN apt-get update -y
-RUN apt-get install xvfb -y
-
-RUN pip install --user tf-agents[reverb] --no-cache-dir
-
-# Setup Jupyter
-RUN pip install jupyter -U && pip install jupyterlab
-
-EXPOSE 8888
-
-#CMD ["python", "humanoid.py"]
-
-#CMD xvfb-run -a -s "-screen 0 1400x900x24" jupyter notebook --ip=0.0.0.0 --allow-root
