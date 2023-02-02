@@ -5,7 +5,7 @@ COPY . .
 
 RUN apt update &&\
 	apt install vim -y &&\
-	apt install --upgrade pip &&\
+	apt install --upgrade pip -y &&\
 	apt install libosmesa6-dev libgl1-mesa-glx libglfw3 -y &&\
 	apt install patchelf &&\
 	pip install imageio &&\
