@@ -2,6 +2,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Description de votre programme')
 
+parser.add_argument('--run_session_id', type=str, help='ID de la session en cours')
 parser.add_argument('--env_name', type=str, default='Humanoid-v3', help='Nom de l\'environnement')
 parser.add_argument('--num_iterations', type=int, default=51, help='Nombre d\'itérations')
 parser.add_argument('--initial_collect_steps', type=int, default=10000, help='Nombre d\'étapes de collecte initiales')
@@ -26,6 +27,8 @@ parser.add_argument('--policy_save_interval', type=int, default=5000, help='Inte
 args = parser.parse_args()
 
 # Récupération des paramètres passés en ligne de commande
+
+run_session_id = args.run_session_id
 env_name = args.env_name
 num_iterations = args.num_iterations
 initial_collect_steps = args.initial_collect_steps
@@ -50,6 +53,7 @@ policy_save_interval = args.policy_save_interval
 
 # Affichage des paramètres
 print("Paramètres :")
+print(f"run_session_id = {run_session_id}")
 print(f"env_name = {env_name}")
 print(f"num_iterations = {num_iterations}")
 print(f"initial_collect_steps = {initial_collect_steps}")
