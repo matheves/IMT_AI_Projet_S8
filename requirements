@@ -1,0 +1,20 @@
+pip install --upgrade pip
+pip install imageio
+pip install ipython
+pip install matplotlib
+
+pip install --user tf-agents[reverb]
+pip3 install -U 'mujoco-py<2.2,>=2.1'
+apt install wget
+wget https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz
+tar -xvf mujoco210-linux-x86_64.tar.gz
+mkdir -p ~/.mujoco
+mv mujoco210 ~/.mujoco/
+
+#export MUJOCO_PY_MUJOCO_PATH=~
+
+echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin' >> ~/.bashrc
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin
+
+apt install libosmesa6-dev libgl1-mesa-glx libglfw3
+

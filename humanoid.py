@@ -279,9 +279,22 @@ returns = [avg_return]
   
 # using now() to get current time
 
+#Video
+def embed_mp4(filename):
+    """Embeds an mp4 file in the notebook."""
+    video = open(filename,'rb').read()
+    b64 = base64.b64encode(video)
+    tag = '''
+    <video width="640" height="480" controls>
+    <source src="data:video/mp4;base64,{0}" type="video/mp4">
+    Your browser does not support the video tag.
+    </video>'''.format(b64.decode())
+
+    return IPython.display.HTML(tag)
+
 
 f = open("log.txt", "a")
-f.write(datetime.datetime.now())
+f.write(str(datetime.datetime.now()))
 f.close()
 
 for _ in range(num_iterations):
@@ -303,9 +316,27 @@ for _ in range(num_iterations):
     if step % log_interval == 0:
         print('step = {0}: loss = {1}'.format(step, loss_info.loss.numpy()))
         
-    if step % save_interval:
+    if step % save_interval ==0 :
         train_checkpointer.save(global_step)
         checkpoint_zip_filename = create_zip_file(checkpoint_dir, os.path.join('.', 'exported_cp_humanoid'))
+        
+        steps = range(0, i + 1, eval_interval)
+        plt.plot(steps, returns)
+        plt.ylabel('Average Return')
+        plt.xlabel('Step')
+        plt.ylim()
+        plt.savefig('result.png')
+        
+        num_episodes = num_iterations
+        video_filename = 'humanoid-' + str(i) + '.mp4'
+        with imageio.get_writer(video_filename, fps=60) as video:
+            time_step = eval_env.reset()
+            video.append_data(eval_env.render())
+            while not time_step.is_last():
+                action_step = eval_actor.policy.action(time_step)
+                time_step = eval_env.step(action_step.action)
+                video.append_data(eval_env.render())
+        embed_mp4(video_filename)
 
 rb_observer.close()
 reverb_server.stop()

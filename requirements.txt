@@ -1,0 +1,5 @@
+gym==0.20.0
+matplotlib==3.5.0
+numpy==1.21.4
+tensorflow==2.10.0
+tf_nightly_gpu==2.8.0.dev20211120
