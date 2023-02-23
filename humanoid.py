@@ -41,7 +41,7 @@ env_name = "Humanoid-v3" # @param {type:"string"}
 
 # Use "num_iterations = 1e6" for better results (2 hrs)
 # 1e5 is just so this doesn't take too long (1 hr)
-num_iterations = 51 # @param {type:"integer"}
+num_iterations = 500000 # @param {type:"integer"}
 
 initial_collect_steps = 10000 # @param {type:"integer"}
 collect_steps_per_iteration = 1 # @param {type:"integer"}
@@ -293,9 +293,7 @@ def embed_mp4(filename):
     return IPython.display.HTML(tag)
 
 
-f = open("log.txt", "a")
-f.write(str(datetime.datetime.now()))
-f.close()
+
 
 for _ in range(num_iterations):
     # Training.
