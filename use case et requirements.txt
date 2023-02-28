@@ -1,0 +1,23 @@
+Tensor Board (Training Monitoring)
+Weights and Biases (MLOps platform)
+
+
+Use cases :
+
+	- Créer une session
+		- Possibilité de démarrer un entraîenement depuis un checkpoint choisi
+		- Possiblité de dupliquer une session existante
+	- Consulter une session :
+		- Statisqtiques training temps réel
+		- Vidéos entraînement
+		- Téléchargement du modèle
+	- Arrêter session (Stop / Clear / Kill)
+	- Copy session 
+	- Possibilité de démarrer un entraîenement depuis un checkpoint choisi
+	- Comparer des sessions entre elles
+
+Contrainte Technique :
+
+	- 1 session -> 1 GPU
+	- File d'attente nécessaire pour gérer les sessions
+	- 

@@ -4,14 +4,14 @@ WORKDIR /app
 
 ENV DOCKER_FLAG=1
 
-COPY . .
-
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin
 # Setup MuJoCo
 RUN python -m pip install --upgrade pip
 
 RUN pip install pipreqs &&\
     pipreqs . &&\
+    pip install psutil &&\
+    pip install flask &&\
     pip install pyglet &&\
     pip install mujoco_py &&\
     mkdir -p /root/.mujoco/mujoco210 &&\
@@ -29,7 +29,11 @@ RUN pip install --user tf-agents[reverb] --no-cache-dir
 # Setup Jupyter
 RUN pip install jupyter -U && pip install jupyterlab
 
-EXPOSE 8888
+COPY . .
+
+EXPOSE 5050
+
+CMD ["python", "API/app.py"]
 
 #CMD ["python", "humanoid.py"]
 
