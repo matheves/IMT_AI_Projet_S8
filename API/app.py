@@ -102,7 +102,7 @@ def stop_model():
     else:
         return jsonify({'status': 'failure'})
 
-@app.route('/get_data/<model_name>/<session_id>', methods=['GET'])
+@app.route('/<model_name>/<session_id>/data', methods=['GET'])
 def get_data(model_name, session_id):
 
     log_file_path = f"{model_name}/{session_id}/log.txt"
@@ -114,6 +114,13 @@ def get_data(model_name, session_id):
                 step, data_name, value = line.split(';')
                 data.append({'step': int(step), 'label': data_name, 'value': float(value)})
     return Response(json.dumps(data), mimetype='application/json')
+
+@app.route('/<model>/<session_id>/status', methods=['GET'])
+def get_status(session_id):
+    for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+        if session_id in proc.info['cmdline']:
+            return jsonify({'status': 'running'})
+    return jsonify({'status': 'stopped'})
     
 if __name__ == '__main__':
     app.run(port=5050, host='0.0.0.0')
